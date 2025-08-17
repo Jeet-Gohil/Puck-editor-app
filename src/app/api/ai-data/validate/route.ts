@@ -1,6 +1,8 @@
-// app/api/ai-data/validate/route.ts
+/**
+ * AI Data Validation API Route - Handles validation and repair of AI data
+ */
 import { NextResponse } from 'next/server';
-import { validateAndRepairAIData } from '@/app/utils/AIDataHandler';
+import { validateAndRepairAIData } from '@/utils/aiDataHandler';
 
 export async function POST(): Promise<NextResponse> {
   try {

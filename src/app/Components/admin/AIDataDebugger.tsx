@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { AIData } from '@/app/hooks/AIDataUpdates';
+import { AIData } from '@/types';
 
 interface ValidationResult {
   isValid: boolean;

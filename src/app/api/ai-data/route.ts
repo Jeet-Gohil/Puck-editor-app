@@ -1,6 +1,9 @@
-// app/api/ai-data/route.ts
+/**
+ * AI Data API Route - Handles reading AI-generated content
+ */
 import { NextResponse } from 'next/server';
-import { AIData, readAIData } from '@/app/utils/AIDataHandler';
+import { readAIData } from '@/utils/aiDataHandler';
+import { AIData } from '@/types';
 
 export async function GET(): Promise<NextResponse<AIData | { message: string }>> {
   try {

@@ -1,37 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# 🎨 Puck Editor App with AI Integration
 
-## Getting Started
+A modern web application builder using **Puck Editor** with **AI-powered content generation** via **Server-Sent Events (SSE)**.
 
-First, run the development server:
+## 🏗️ **Architecture Overview**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Next.js API   │    │  Python SSE     │
+│   (React/Puck)  │◄──►│   Routes        │◄──►│  Server         │
+│                 │    │                 │    │  (OpenAI)       │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 **Quick Start**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### **1. Install Dependencies**
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **2. Start Python SSE Server**
+```bash
+python test_sse_server.py
+```
 
-## Learn More
+### **3. Start Frontend**
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+### **4. Open Editor**
+Navigate to: `http://localhost:3000/editor`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔧 **How It Works**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **AI Content Generation Flow**
 
-## Deploy on Vercel
+1. **User Action**: User clicks "Generate with AI" on any field
+2. **Request Creation**: Frontend creates request with unique element ID
+3. **Job Submission**: POST to `/generate` endpoint queues the job
+4. **SSE Connection**: GET to `/stream` endpoint listens for results
+5. **AI Processing**: Python server calls OpenAI API
+6. **Result Broadcasting**: Server broadcasts result via SSE
+7. **Field Update**: Frontend updates the specific field
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### **Element ID Format**
+```
+HeroSectionOne-{uuid}_custom_{fieldName}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Puck-editor-app
+Example: `HeroSectionOne-abc123_custom_navbarBrand`
+
+## 🐛 **Common Issues & Solutions**
+
+### **Values Going to Wrong Fields**
+- **Cause**: Element ID mismatch between request and response
+- **Solution**: Check console logs for "🔍 Comparing element IDs"
+- **Fix**: Ensure Python server returns exact element ID
+
+### **Timeout Errors**
+- **Cause**: SSE connection not receiving results
+- **Solution**: Check Python server logs for job processing
+- **Debug**: Test `/stream` endpoint accessibility
+
+### **No AI Generation**
+- **Cause**: Python server not running or OpenAI API issues
+- **Solution**: Check server console and API key
+- **Debug**: Test `/test` endpoint for server health
+
+## 🚨 **Troubleshooting**
+
+### **Check SSE Server**
+```bash
+# Test server health
+curl http://localhost:8000/test
+
+# Test SSE stream
+curl http://localhost:8000/stream
+```
+
+### **Check Frontend Logs**
+Look for these log patterns:
+- `🚀 Starting AI request for:`
+- `🎯 Found result for our element:`
+- `❌ Request timeout after 45 seconds`
+
+### **Check Python Server Logs**
+Look for these log patterns:
+- `🚀 Processing job for element:`
+- `✅ Generated content for ... in 2.5s:`
+- `❌ generation failed after 2.5s:`
+
+---
+
+**Built with**: Next.js, React, Puck Editor, TypeScript, Python, OpenAI API, Server-Sent Events

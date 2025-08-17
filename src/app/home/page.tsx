@@ -15,10 +15,10 @@ export default function HomePage() {
             Puck Editor
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            A powerful visual editor with AI-powered content generation.
+            A powerful visual editor with AI-powered content generation. 
             Build beautiful pages with drag-and-drop components and intelligent content assistance.
           </p>
-
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/editor"
@@ -26,14 +26,7 @@ export default function HomePage() {
             >
               Open Editor
             </Link>
-
-            <Link
-              href="/admin"
-              className="inline-flex items-center px-8 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
-            >
-              AI Configuration
-            </Link>
-
+            
             <a
               href="https://github.com/your-repo/puck-editor"
               target="_blank"
